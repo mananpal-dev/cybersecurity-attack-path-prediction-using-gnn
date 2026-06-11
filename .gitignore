@@ -1,0 +1,59 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+.Python
+env/
+venv/
+.venv/
+pip-wheel-metadata/
+
+# ── Model binaries (regenerate with train_gnn.py) ─────────────────────────────
+gnn_model.pt
+gnn_dataset.pt
+
+# ── Generated data (regenerate with generate_synthetic_data.py) ───────────────
+data/synthetic_data/*.json
+data/synthetic_data/*.csv
+data/synthetic_data/*.pt
+
+# ── Environment / secrets ─────────────────────────────────────────────────────
+.env
+*.env.local
+.streamlit/secrets.toml
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── Logs & outputs ────────────────────────────────────────────────────────────
+*.log
+logs/
+outputs/
+*.png
+*.svg
+!assets/screenshots/*.png
+
+# ── Test artifacts ────────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# ── Windows junk (never again) ────────────────────────────────────────────────
+New Text Document.txt
+*.bak
+Thumbs.db
