@@ -35,7 +35,7 @@ from graph.find_attack_path import (
 # ── Page config (MUST be first Streamlit call) ────────────────────────────────
 st.set_page_config(
     page_title="CyberGraph | Attack Path Intelligence",
-    page_icon="🛡️",
+    page_icon="assets/favicon.png",
     layout="wide",
     initial_sidebar_state="expanded",
 )
