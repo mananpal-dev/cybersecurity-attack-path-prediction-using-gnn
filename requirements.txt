@@ -1,27 +1,33 @@
-# ──────────────────────────────────────────────────────────────────────────────
-# cybersecurity-attack-path-prediction-using-gnn
-# Runtime dependencies — Python 3.10+
-# ──────────────────────────────────────────────────────────────────────────────
+# =============================================================================
+# Cybersecurity Attack Path Prediction using GNN
+# Production Requirements (Streamlit Dashboard)
+# =============================================================================
+# These packages are required to run the Streamlit dashboard.
+# Machine Learning dependencies (PyTorch & PyTorch Geometric) are intentionally
+# excluded because the dashboard does not train or execute the GNN model.
+# =============================================================================
 
-# ── Core ML ────────────────────────────────────────────────────────────────────
-torch==2.3.1
-torch_geometric==2.5.3
-
-# PyG optional dependencies (install AFTER torch)
-# pip install pyg_lib torch_scatter torch_sparse torch_cluster -f https://data.pyg.org/whl/torch-2.3.1+cpu.html
-
-# ── Graph processing ───────────────────────────────────────────────────────────
-networkx==3.3
-
-# ── Dashboard & visualization ──────────────────────────────────────────────────
+# -------------------------
+# Dashboard
+# -------------------------
 streamlit==1.36.0
 plotly==5.22.0
 matplotlib==3.9.0
 
-# ── Data ───────────────────────────────────────────────────────────────────────
+# -------------------------
+# Graph Processing
+# -------------------------
+networkx==3.3
+
+# -------------------------
+# Data Processing
+# -------------------------
 numpy==1.26.4
 pandas==2.2.2
 scikit-learn==1.5.0
 
-# ── Utilities ──────────────────────────────────────────────────────────────────
+# -------------------------
+# Utilities
+# -------------------------
 python-dotenv==1.0.1
+neo4j==5.28.2
