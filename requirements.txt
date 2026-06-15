@@ -8,6 +8,15 @@
 # =============================================================================
 
 # -------------------------
+# Deep Learining
+# -------------------------
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.10.0
+torchvision==0.25.0
+torchaudio==2.10.0
+torch-geometric==2.7.0
+
+# -------------------------
 # Dashboard
 # -------------------------
 streamlit==1.36.0
@@ -31,11 +40,3 @@ scikit-learn==1.5.0
 # -------------------------
 python-dotenv==1.0.1
 neo4j==5.28.2
-
-# -------------------------
-# Deep Learining
-# -------------------------
-torch==2.10.0
-torchvision==0.25.0
-torchaudio==2.10.0
-torch-geometric==2.7.0
