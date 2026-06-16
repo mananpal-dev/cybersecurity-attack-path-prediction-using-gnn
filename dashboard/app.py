@@ -4,7 +4,7 @@ dashboard/app.py
 Professional Cybersecurity Attack Path Analytics Dashboard
 
 Design target: CrowdStrike / Wiz / Microsoft Defender aesthetic
-Theme: Deep Navy + Electric Blue + Cyan highlights
+Theme: Deep Navy + Electric Blue + Cyan highlights + MP Amber Gold accents
 """
 
 import random
@@ -32,7 +32,7 @@ from graph.find_attack_path import (
     score_node_criticality,
 )
 
-# ── Page config (MUST be first Streamlit call) ────────────────────────────────
+# ─────────────────────────────────
 st.set_page_config(
     page_title="CyberGraph | Attack Path Intelligence",
     page_icon="assets/favicon.png",
@@ -55,7 +55,7 @@ st.markdown("""
   /* ── Sidebar ── */
   [data-testid="stSidebar"] {
     background: linear-gradient(180deg, #0a1628 0%, #060d1a 100%);
-    border-right: 1px solid rgba(30, 200, 255, 0.12);
+    border-right: 1px solid rgba(245, 166, 35, 0.15);
   }
   [data-testid="stSidebar"] * { color: #b8c5d6 !important; }
   [data-testid="stSidebar"] .stSelectbox label,
@@ -76,8 +76,8 @@ st.markdown("""
     transition: box-shadow 0.2s ease;
   }
   [data-testid="metric-container"]:hover {
-    box-shadow: 0 0 32px rgba(30, 200, 255, 0.14);
-    border-color: rgba(30, 200, 255, 0.35) !important;
+    box-shadow: 0 0 32px rgba(245, 166, 35, 0.12);
+    border-color: rgba(245, 166, 35, 0.3) !important;
   }
   [data-testid="stMetricLabel"] { color: #7aa3cc !important; font-size: 0.78rem !important; text-transform: uppercase; letter-spacing: 0.06em; }
   [data-testid="stMetricValue"] { color: #e8f4ff !important; font-size: 2.1rem !important; font-weight: 600; }
@@ -89,7 +89,7 @@ st.markdown("""
   h3 { color: #8aafd4 !important; font-weight: 500 !important; font-size: 0.95rem !important; }
 
   /* ── Dividers ── */
-  hr { border-color: rgba(30, 200, 255, 0.12) !important; }
+  hr { border-color: rgba(245, 166, 35, 0.12) !important; }
 
   /* ── Plotly chart containers ── */
   .js-plotly-plot { border-radius: 12px; overflow: hidden; }
@@ -101,16 +101,16 @@ st.markdown("""
   .stButton>button {
     background: linear-gradient(135deg, #0f4c8a 0%, #1168c0 100%) !important;
     color: #e8f4ff !important;
-    border: 1px solid rgba(30, 200, 255, 0.35) !important;
+    border: 1px solid rgba(245, 166, 35, 0.4) !important;
     border-radius: 8px !important;
     font-weight: 500 !important;
     padding: 8px 20px !important;
     transition: all 0.2s ease !important;
-    box-shadow: 0 0 16px rgba(17, 104, 192, 0.3) !important;
+    box-shadow: 0 0 16px rgba(245, 166, 35, 0.15) !important;
   }
   .stButton>button:hover {
-    box-shadow: 0 0 28px rgba(30, 200, 255, 0.45) !important;
-    border-color: #1ec8ff !important;
+    box-shadow: 0 0 28px rgba(245, 166, 35, 0.35) !important;
+    border-color: #F5A623 !important;
     transform: translateY(-1px);
   }
 
@@ -121,11 +121,11 @@ st.markdown("""
   /* ── Tabs ── */
   .stTabs [data-baseweb="tab-list"] { background: rgba(10, 22, 45, 0.8); border-radius: 10px; padding: 4px; }
   .stTabs [data-baseweb="tab"] { color: #7aa3cc !important; border-radius: 8px; }
-  .stTabs [aria-selected="true"] { background: rgba(30, 200, 255, 0.15) !important; color: #1ec8ff !important; }
+  .stTabs [aria-selected="true"] { background: rgba(245, 166, 35, 0.12) !important; color: #F5A623 !important; }
 
   /* ── Select/slider ── */
   .stSelectbox>div>div { background: rgba(10, 25, 55, 0.85) !important; border-color: rgba(30, 200, 255, 0.2) !important; color: #e2e8f4 !important; }
-  .stSlider [data-testid="stSlider"] { color: #1ec8ff !important; }
+  .stSlider [data-testid="stSlider"] { color: #F5A623 !important; }
 
   /* ── Custom card ── */
   .cyber-card {
@@ -137,7 +137,7 @@ st.markdown("""
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(6px);
   }
-  .cyber-card:hover { border-color: rgba(30, 200, 255, 0.28); }
+  .cyber-card:hover { border-color: rgba(245, 166, 35, 0.25); }
 
   /* ── Risk badges ── */
   .badge-critical { background:#2d0a0a; border:1px solid #FF3B3B; color:#FF3B3B; padding:3px 10px; border-radius:6px; font-size:0.78rem; font-weight:600; font-family:'JetBrains Mono',monospace; }
@@ -145,10 +145,82 @@ st.markdown("""
   .badge-medium   { background:#2d2700; border:1px solid #FFD700; color:#FFD700; padding:3px 10px; border-radius:6px; font-size:0.78rem; font-weight:600; font-family:'JetBrains Mono',monospace; }
   .badge-low      { background:#0a2d10; border:1px solid #22C55E; color:#22C55E; padding:3px 10px; border-radius:6px; font-size:0.78rem; font-weight:600; font-family:'JetBrains Mono',monospace; }
 
+  /* ── MP Logo sidebar ── */
+  .mp-logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0 2px;
+  }
+  .mp-logo-wrap img {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  .mp-logo-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #F5A623 !important;
+    letter-spacing: 0.01em;
+    line-height: 1.15;
+  }
+  .mp-logo-sub {
+    font-size: 0.72rem;
+    color: #4a6f9a !important;
+    letter-spacing: 0.03em;
+    margin-top: 1px;
+  }
+
+  /* ── Hero logo row ── */
+  .hero-logo-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 2px;
+  }
+  .hero-logo-row img {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 0 18px rgba(245, 166, 35, 0.25);
+  }
+  .hero-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #1ec8ff;
+    margin: 0;
+  }
+  .hero-title span {
+    color: #F5A623;
+  }
+
+  /* ── Footer brand mark ── */
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .footer-brand img {
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    opacity: 0.75;
+  }
+  .footer-brand span {
+    font-size: 0.7rem;
+    color: #2e4a6a !important;
+    letter-spacing: 0.04em;
+  }
+
   /* ── Scrollbar ── */
   ::-webkit-scrollbar { width: 5px; height: 5px; }
   ::-webkit-scrollbar-track { background: #060d1a; }
-  ::-webkit-scrollbar-thumb { background: rgba(30, 200, 255, 0.25); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb { background: rgba(245, 166, 35, 0.2); border-radius: 4px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -158,7 +230,7 @@ PLOTLY_LAYOUT = dict(
     plot_bgcolor="rgba(10,22,45,0.6)",
     font=dict(family="Space Grotesk, sans-serif", color="#b8c5d6", size=12),
     margin=dict(l=16, r=16, t=36, b=16),
-    colorway=["#1ec8ff", "#0f9acc", "#0675a2", "#35d4a8", "#f5a623", "#ff6b6b"],
+    colorway=["#1ec8ff", "#F5A623", "#0f9acc", "#35d4a8", "#0675a2", "#ff6b6b"],
     xaxis=dict(gridcolor="rgba(30,200,255,0.07)", linecolor="rgba(30,200,255,0.15)", tickcolor="rgba(30,200,255,0.15)"),
     yaxis=dict(gridcolor="rgba(30,200,255,0.07)", linecolor="rgba(30,200,255,0.15)", tickcolor="rgba(30,200,255,0.15)"),
 )
@@ -215,7 +287,6 @@ def build_attack_graph_figure(G: nx.DiGraph, paths: List[Dict]) -> go.Figure:
     """Build interactive Plotly force-directed attack graph."""
     pos = nx.spring_layout(G, seed=7, k=1.8 / max(1, G.number_of_nodes() ** 0.5))
 
-    # Segment → color mapping
     SEG_COLORS = {
         "internet":   "#FF3B3B",
         "dmz":        "#FF8C00",
@@ -223,18 +294,16 @@ def build_attack_graph_figure(G: nx.DiGraph, paths: List[Dict]) -> go.Figure:
         "restricted": "#FFD700",
     }
 
-    # Highlight nodes on top attack paths
     path_nodes = set()
     for p in paths:
         path_nodes.update(p.get("nodes", []))
 
-    # Edge traces
     edge_traces = []
     for (u, v) in G.edges():
         x0, y0 = pos[u]
         x1, y1 = pos[v]
         on_path = u in path_nodes and v in path_nodes
-        color = "rgba(255,60,60,0.65)" if on_path else "rgba(30,200,255,0.15)"
+        color = "rgba(245,166,35,0.55)" if on_path else "rgba(30,200,255,0.15)"
         width = 2.5 if on_path else 0.8
         edge_traces.append(go.Scatter(
             x=[x0, x1, None],
@@ -244,7 +313,6 @@ def build_attack_graph_figure(G: nx.DiGraph, paths: List[Dict]) -> go.Figure:
             hoverinfo="none",
         ))
 
-    # Node trace
     node_x, node_y, node_colors, node_sizes, node_texts, hover_texts = [], [], [], [], [], []
     for n in G.nodes():
         x, y = pos[n]
@@ -282,7 +350,7 @@ def build_attack_graph_figure(G: nx.DiGraph, paths: List[Dict]) -> go.Figure:
         marker=dict(
             size=node_sizes,
             color=node_colors,
-            line=dict(width=1.5, color="rgba(30,200,255,0.4)"),
+            line=dict(width=1.5, color="rgba(245,166,35,0.3)"),
         ),
     )
 
@@ -389,7 +457,7 @@ def build_attack_path_sankey(paths: List[Dict], G: nx.DiGraph) -> go.Figure:
         ),
         link=dict(
             source=sources, target=targets, value=values,
-            color=["rgba(255,59,59,0.4)"] * len(sources),
+            color=["rgba(245,166,35,0.35)"] * len(sources),
         ),
     ))
     apply_layout(fig,
@@ -405,7 +473,6 @@ def build_mitre_heatmap(threat_matrix: Dict) -> go.Figure:
     if not tactics:
         return go.Figure()
 
-    # Collect all unique technique IDs
     all_techs = sorted({t for tac in tactics for t in threat_matrix.get(tac, {})})
     if not all_techs:
         return go.Figure()
@@ -421,7 +488,7 @@ def build_mitre_heatmap(threat_matrix: Dict) -> go.Figure:
         z=z,
         x=tech_labels,
         y=[t[:18] for t in tactics],
-        colorscale=[[0, "rgba(10,22,45,0.9)"], [0.5, "rgba(30,100,255,0.6)"], [1, "#1ec8ff"]],
+        colorscale=[[0, "rgba(10,22,45,0.9)"], [0.5, "rgba(245,166,35,0.4)"], [1, "#F5A623"]],
         showscale=False,
         hoverongaps=False,
         hovertemplate="Tactic: %{y}<br>Technique: %{x}<br>Occurrences: %{z}<extra></extra>",
@@ -498,10 +565,10 @@ def build_top_paths_table(paths: List[Dict]) -> go.Figure:
         header=dict(
             values=["<b>ID</b>", "<b>Score</b>", "<b>Tier</b>", "<b>Hops</b>",
                     "<b>Techniques</b>", "<b>Primary Tactic</b>", "<b>Blast Radius</b>"],
-            fill_color="rgba(15,40,90,0.95)",
+            fill_color="rgba(15,27,45,0.98)",
             align="left",
-            font=dict(color="#1ec8ff", size=11, family="Space Grotesk"),
-            line_color="rgba(30,200,255,0.2)",
+            font=dict(color="#F5A623", size=11, family="Space Grotesk"),
+            line_color="rgba(245,166,35,0.18)",
             height=34,
         ),
         cells=dict(
@@ -517,7 +584,7 @@ def build_top_paths_table(paths: List[Dict]) -> go.Figure:
             fill_color=col_colors,
             align="left",
             font=dict(color=["#b8c5d6", "#f0a040", "#ffffff", "#b8c5d6", "#7aa3cc", "#7aa3cc", "#b8c5d6"], size=11, family="Space Grotesk"),
-            line_color="rgba(30,200,255,0.08)",
+            line_color="rgba(245,166,35,0.07)",
             height=30,
         ),
     ))
@@ -529,8 +596,19 @@ def build_top_paths_table(paths: List[Dict]) -> go.Figure:
 
 def render_sidebar():
     with st.sidebar:
-        st.markdown("## 🛡️ CyberGraph")
-        st.markdown("<p style='color:#4a6f9a; font-size:0.78rem; margin-top:-10px;'>Attack Path Intelligence</p>", unsafe_allow_html=True)
+        # ── Branding: logo + title ──
+        st.markdown(
+            """
+            <div class="mp-logo-wrap">
+              <img src="app/static/favicon.png" alt="MP"/>
+              <div>
+                <div class="mp-logo-title">CyberGraph</div>
+                <div class="mp-logo-sub">Attack Path Intelligence</div>
+              </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
         st.divider()
 
         st.markdown("### ⚙️ Scan Configuration")
@@ -579,6 +657,16 @@ def render_sidebar():
                 f"&nbsp;|&nbsp; Total scans: {st.session_state.scan_count}</p>",
                 unsafe_allow_html=True
             )
+        # ── Footer brand mark ──
+        st.markdown(
+            """
+            <div class="footer-brand">
+              <img src="app/static/favicon.png" alt="MP"/>
+              <span>by Manan Pal &nbsp;·&nbsp; GNN Security Research</span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
     return top_k
 
@@ -588,15 +676,21 @@ def render_sidebar():
 def render_hero():
     col_title, col_status = st.columns([4, 1])
     with col_title:
+        # Logo + title inline
         st.markdown(
-            "<h1 style='font-size:1.75rem; margin-bottom:0;'>"
-            "🛡️ CyberGraph — Attack Path Intelligence Platform"
-            "</h1>",
-            unsafe_allow_html=True
+            """
+            <div class="hero-logo-row">
+              <img src="app/static/favicon.png" alt="MP logo"/>
+              <h1 class="hero-title">
+                CyberGraph &mdash; <span>Attack Path</span> Intelligence Platform
+              </h1>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
         st.markdown(
-            "<p style='color:#4a6f9a; font-size:0.85rem; margin-top:4px;'>"
-            "Graph Neural Network · MITRE ATT&CK · CVSS v3.1 · Real-Time Risk Scoring"
+            "<p style='color:#4a6f9a; font-size:0.85rem; margin-top:6px; padding-left:60px;'>"
+            "Graph Neural Network &nbsp;·&nbsp; MITRE ATT&CK &nbsp;·&nbsp; CVSS v3.1 &nbsp;·&nbsp; Real-Time Risk Scoring"
             "</p>",
             unsafe_allow_html=True
         )
@@ -632,7 +726,6 @@ def render_kpi_strip(metrics: Dict):
 
 def render_main_analysis(G: nx.DiGraph, paths: List[Dict], metrics: Dict, threat_matrix: Dict):
     """Main two-column analysis layout."""
-    # Tab layout
     tab_overview, tab_paths, tab_mitre, tab_details = st.tabs([
         "📊 Overview", "🔴 Attack Paths", "🎯 MITRE ATT&CK", "🔍 Node Details"
     ])
@@ -657,7 +750,7 @@ def render_main_analysis(G: nx.DiGraph, paths: List[Dict], metrics: Dict, threat
         else:
             st.markdown(
                 f"<div class='cyber-card'>"
-                f"<b style='color:#1ec8ff'>Detected {len(paths)} exploitable attack path(s)</b> "
+                f"<b style='color:#F5A623'>Detected {len(paths)} exploitable attack path(s)</b> "
                 f"using risk-weighted graph traversal. Ranked by composite risk score "
                 f"(CVSS × exploitability × asset criticality).</div>",
                 unsafe_allow_html=True
@@ -707,7 +800,7 @@ def render_main_analysis(G: nx.DiGraph, paths: List[Dict], metrics: Dict, threat
                     color = RISK_COLORS.get(sev, "#64748B")
                     st.markdown(
                         f"<div style='margin:3px 0; font-size:0.78rem;'>"
-                        f"<code style='color:#1ec8ff'>{tech_id}</code> "
+                        f"<code style='color:#F5A623'>{tech_id}</code> "
                         f"<span style='color:#7aa3cc'>{info.get('name','')[:28]}</span></div>",
                         unsafe_allow_html=True
                     )
@@ -735,7 +828,7 @@ def render_main_analysis(G: nx.DiGraph, paths: List[Dict], metrics: Dict, threat
             st.dataframe(
                 df.style.background_gradient(
                     subset=["CVSS Score", "Risk Score"],
-                    cmap="RdYlGn_r",
+                    cmap="YlOrRd",
                 ),
                 use_container_width=True,
                 height=400,
@@ -747,12 +840,21 @@ def render_main_analysis(G: nx.DiGraph, paths: List[Dict], metrics: Dict, threat
 def render_executive_summary(metrics: Dict, paths: List[Dict]):
     """Bottom executive summary section."""
     st.markdown("---")
-    st.markdown("### 📋 Executive Summary")
+    # Section header with tiny logo
+    st.markdown(
+        """
+        <div style='display:flex; align-items:center; gap:10px; margin-bottom:12px;'>
+          <img src="app/static/favicon.png" style="width:24px;height:24px;border-radius:6px;opacity:0.9;" alt="MP"/>
+          <span style='color:#8aafd4; font-weight:500; font-size:0.95rem; letter-spacing:0.01em;'>Executive Summary</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     col1, col2, col3 = st.columns(3)
 
     with col1:
         st.markdown("""<div class='cyber-card'>
-            <h3 style='color:#1ec8ff; margin-top:0'>Risk Posture</h3>""",
+            <h3 style='color:#F5A623; margin-top:0'>Risk Posture</h3>""",
             unsafe_allow_html=True)
         st.markdown(
             f"Network risk tier: **{metrics.get('network_risk_tier','N/A')}**  \n"
@@ -821,7 +923,7 @@ def main():
 
     if G is not None:
         render_kpi_strip(metrics)
-        st.markdown("<div style='height:12px'/>" , unsafe_allow_html=True)
+        st.markdown("<div style='height:12px'/>", unsafe_allow_html=True)
         render_main_analysis(G, paths, metrics, threat_matrix)
         render_executive_summary(metrics, paths)
     else:
