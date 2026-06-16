@@ -145,77 +145,6 @@ st.markdown("""
   .badge-medium   { background:#2d2700; border:1px solid #FFD700; color:#FFD700; padding:3px 10px; border-radius:6px; font-size:0.78rem; font-weight:600; font-family:'JetBrains Mono',monospace; }
   .badge-low      { background:#0a2d10; border:1px solid #22C55E; color:#22C55E; padding:3px 10px; border-radius:6px; font-size:0.78rem; font-weight:600; font-family:'JetBrains Mono',monospace; }
 
-  /* ── MP Logo sidebar ── */
-  .mp-logo-wrap {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 4px 0 2px;
-  }
-  .mp-logo-wrap img {
-    width: 38px;
-    height: 38px;
-    border-radius: 8px;
-    object-fit: cover;
-  }
-  .mp-logo-title {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #F5A623 !important;
-    letter-spacing: 0.01em;
-    line-height: 1.15;
-  }
-  .mp-logo-sub {
-    font-size: 0.72rem;
-    color: #4a6f9a !important;
-    letter-spacing: 0.03em;
-    margin-top: 1px;
-  }
-
-  /* ── Hero logo row ── */
-  .hero-logo-row {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 2px;
-  }
-  .hero-logo-row img {
-    width: 46px;
-    height: 46px;
-    border-radius: 10px;
-    object-fit: cover;
-    box-shadow: 0 0 18px rgba(245, 166, 35, 0.25);
-  }
-  .hero-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    color: #1ec8ff;
-    margin: 0;
-  }
-  .hero-title span {
-    color: #F5A623;
-  }
-
-  /* ── Footer brand mark ── */
-  .footer-brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 6px;
-  }
-  .footer-brand img {
-    width: 22px;
-    height: 22px;
-    border-radius: 5px;
-    opacity: 0.75;
-  }
-  .footer-brand span {
-    font-size: 0.7rem;
-    color: #2e4a6a !important;
-    letter-spacing: 0.04em;
-  }
 
   /* ── Scrollbar ── */
   ::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -597,18 +526,17 @@ def build_top_paths_table(paths: List[Dict]) -> go.Figure:
 def render_sidebar():
     with st.sidebar:
         # ── Branding: logo + title ──
-        st.markdown(
-            """
-            <div class="mp-logo-wrap">
-              <img src="app/static/favicon.png" alt="MP"/>
-              <div>
-                <div class="mp-logo-title">CyberGraph</div>
-                <div class="mp-logo-sub">Attack Path Intelligence</div>
-              </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        col_logo, col_text = st.columns([1, 3])
+        with col_logo:
+            st.image("assets/favicon.png", width=42)
+        with col_text:
+            st.markdown(
+                "<div style='padding-top:5px;'>"
+                "<span style='color:#F5A623; font-weight:700; font-size:1.05rem; letter-spacing:0.01em;'>CyberGraph</span><br>"
+                "<span style='color:#4a6f9a; font-size:0.72rem; letter-spacing:0.03em;'>Attack Path Intelligence</span>"
+                "</div>",
+                unsafe_allow_html=True,
+            )
         st.divider()
 
         st.markdown("### ⚙️ Scan Configuration")
@@ -658,15 +586,15 @@ def render_sidebar():
                 unsafe_allow_html=True
             )
         # ── Footer brand mark ──
-        st.markdown(
-            """
-            <div class="footer-brand">
-              <img src="app/static/favicon.png" alt="MP"/>
-              <span>by Manan Pal &nbsp;·&nbsp; GNN Security Research</span>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        col_fl, col_ft = st.columns([1, 4])
+        with col_fl:
+            st.image("assets/favicon.png", width=22)
+        with col_ft:
+            st.markdown(
+                "<span style='color:#2e4a6a; font-size:0.70rem; letter-spacing:0.04em;'>"
+                "by Manan Pal &nbsp;·&nbsp; GNN Security Research</span>",
+                unsafe_allow_html=True,
+            )
 
     return top_k
 
@@ -676,24 +604,23 @@ def render_sidebar():
 def render_hero():
     col_title, col_status = st.columns([4, 1])
     with col_title:
-        # Logo + title inline
-        st.markdown(
-            """
-            <div class="hero-logo-row">
-              <img src="app/static/favicon.png" alt="MP logo"/>
-              <h1 class="hero-title">
-                CyberGraph &mdash; <span>Attack Path</span> Intelligence Platform
-              </h1>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            "<p style='color:#4a6f9a; font-size:0.85rem; margin-top:6px; padding-left:60px;'>"
-            "Graph Neural Network &nbsp;·&nbsp; MITRE ATT&CK &nbsp;·&nbsp; CVSS v3.1 &nbsp;·&nbsp; Real-Time Risk Scoring"
-            "</p>",
-            unsafe_allow_html=True
-        )
+        col_logo_h, col_title_h = st.columns([1, 8])
+        with col_logo_h:
+            st.image("assets/favicon.png", width=46)
+        with col_title_h:
+            st.markdown(
+                "<h1 style='font-size:1.75rem; font-weight:700; letter-spacing:-0.02em; "
+                "color:#1ec8ff; margin:0; padding-top:2px;'>"
+                "CyberGraph &mdash; <span style='color:#F5A623;'>Attack Path</span> Intelligence Platform"
+                "</h1>",
+                unsafe_allow_html=True,
+            )
+            st.markdown(
+                "<p style='color:#4a6f9a; font-size:0.85rem; margin-top:4px;'>"
+                "Graph Neural Network &nbsp;·&nbsp; MITRE ATT&CK &nbsp;·&nbsp; CVSS v3.1 &nbsp;·&nbsp; Real-Time Risk Scoring"
+                "</p>",
+                unsafe_allow_html=True
+            )
     with col_status:
         if st.session_state.graph is not None:
             m = st.session_state.metrics
@@ -841,15 +768,15 @@ def render_executive_summary(metrics: Dict, paths: List[Dict]):
     """Bottom executive summary section."""
     st.markdown("---")
     # Section header with tiny logo
-    st.markdown(
-        """
-        <div style='display:flex; align-items:center; gap:10px; margin-bottom:12px;'>
-          <img src="app/static/favicon.png" style="width:24px;height:24px;border-radius:6px;opacity:0.9;" alt="MP"/>
-          <span style='color:#8aafd4; font-weight:500; font-size:0.95rem; letter-spacing:0.01em;'>Executive Summary</span>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    col_es_logo, col_es_title = st.columns([1, 16])
+    with col_es_logo:
+        st.image("assets/favicon.png", width=24)
+    with col_es_title:
+        st.markdown(
+            "<span style='color:#8aafd4; font-weight:500; font-size:0.95rem; "
+            "letter-spacing:0.01em; display:block; padding-top:3px;'>Executive Summary</span>",
+            unsafe_allow_html=True,
+        )
     col1, col2, col3 = st.columns(3)
 
     with col1:
