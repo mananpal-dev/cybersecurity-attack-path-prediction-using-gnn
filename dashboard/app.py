@@ -20,6 +20,9 @@ import plotly.express as px
 import streamlit as st
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
+
+# ── Asset paths (resolved relative to this file) ───────────────────────────────
+FAVICON = str(Path(__file__).parent / "assets" / "favicon.png")
 from config.settings import (
     MITRE_TECHNIQUES, NODE_TYPES, RISK_COLORS, TACTIC_ORDER,
     get_risk_tier, DATA_CONFIG, GNN_CONFIG, MODEL_PATH,
@@ -35,7 +38,7 @@ from graph.find_attack_path import (
 # ─────────────────────────────────
 st.set_page_config(
     page_title="CyberGraph | Attack Path Intelligence",
-    page_icon="assets/favicon.png",
+    page_icon=str(Path(__file__).parent / "assets" / "favicon.png"),
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -528,7 +531,7 @@ def render_sidebar():
         # ── Branding: logo + title ──
         col_logo, col_text = st.columns([1, 3])
         with col_logo:
-            st.image("assets/favicon.png", width=42)
+            st.image(FAVICON, width=42)
         with col_text:
             st.markdown(
                 "<div style='padding-top:5px;'>"
@@ -588,7 +591,7 @@ def render_sidebar():
         # ── Footer brand mark ──
         col_fl, col_ft = st.columns([1, 4])
         with col_fl:
-            st.image("assets/favicon.png", width=22)
+            st.image(FAVICON, width=22)
         with col_ft:
             st.markdown(
                 "<span style='color:#2e4a6a; font-size:0.70rem; letter-spacing:0.04em;'>"
@@ -606,7 +609,7 @@ def render_hero():
     with col_title:
         col_logo_h, col_title_h = st.columns([1, 8])
         with col_logo_h:
-            st.image("assets/favicon.png", width=46)
+            st.image(FAVICON, width=46)
         with col_title_h:
             st.markdown(
                 "<h1 style='font-size:1.75rem; font-weight:700; letter-spacing:-0.02em; "
@@ -770,7 +773,7 @@ def render_executive_summary(metrics: Dict, paths: List[Dict]):
     # Section header with tiny logo
     col_es_logo, col_es_title = st.columns([1, 16])
     with col_es_logo:
-        st.image("assets/favicon.png", width=24)
+        st.image(FAVICON, width=24)
     with col_es_title:
         st.markdown(
             "<span style='color:#8aafd4; font-weight:500; font-size:0.95rem; "
