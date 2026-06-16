@@ -1,3 +1,4 @@
+import base64
 import random
 import sys
 import time
@@ -34,6 +35,12 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+def get_base64_image(image_path: Path) -> str:
+    if not image_path.exists():
+        return ""
+    return base64.b64encode(image_path.read_bytes()).decode()
+
 
 st.markdown(
     """
@@ -322,7 +329,6 @@ def _run_analysis(node_count: int, seed: int, is_attack: bool, top_k: int):
 
 def build_attack_graph_figure(G: nx.DiGraph, paths: List[Dict]) -> go.Figure:
     pos = nx.spring_layout(G, seed=7, k=1.8 / max(1, G.number_of_nodes() ** 0.5))
-
     seg_colors = {
         "internet": "#FF3B3B",
         "dmz": "#FF8C00",
@@ -331,8 +337,8 @@ def build_attack_graph_figure(G: nx.DiGraph, paths: List[Dict]) -> go.Figure:
     }
 
     path_nodes = {n for p in paths for n in p.get("nodes", [])}
-
     edge_traces = []
+
     for u, v in G.edges():
         x0, y0 = pos[u]
         x1, y1 = pos[v]
@@ -631,18 +637,18 @@ def build_top_paths_table(paths: List[Dict]) -> go.Figure:
 
 def render_sidebar():
     with st.sidebar:
-        col_logo, col_text = st.columns([1, 3])
-        with col_logo:
-            if FAVICON.exists():
-                st.image(str(FAVICON), width=42)
-        with col_text:
-            st.markdown(
-                "<div style='padding-top:5px;'>"
-                "<span style='color:#F5A623; font-weight:700; font-size:1.05rem; letter-spacing:0.01em;'>CyberGraph</span><br>"
-                "<span style='color:#4a6f9a; font-size:0.72rem; letter-spacing:0.03em;'>Attack Path Intelligence</span>"
-                "</div>",
-                unsafe_allow_html=True,
-            )
+        st.markdown(
+            f"""
+            <div style="display:flex; align-items:center; gap:12px; padding:6px 0 4px 0;">
+                <img src="data:image/png;base64,{get_base64_image(FAVICON)}" style="width:42px; height:42px; object-fit:contain; flex-shrink:0;" />
+                <div style="line-height:1.15;">
+                    <div style="color:#F5A623; font-weight:700; font-size:1.05rem; letter-spacing:0.01em;">CyberGraph</div>
+                    <div style="color:#4a6f9a; font-size:0.72rem; letter-spacing:0.03em;">Attack Path Intelligence</div>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
         st.divider()
         st.markdown("### ⚙️ Scan Configuration")
@@ -691,40 +697,41 @@ def render_sidebar():
                 unsafe_allow_html=True,
             )
 
-        col_fl, col_ft = st.columns([1, 4])
-        with col_fl:
-            if FAVICON.exists():
-                st.image(str(FAVICON), width=22)
-        with col_ft:
-            st.markdown(
-                "<span style='color:#2e4a6a; font-size:0.70rem; letter-spacing:0.04em;'>"
-                "by Manan Pal · GNN Security Research</span>",
-                unsafe_allow_html=True,
-            )
+        st.markdown(
+            f"""
+            <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
+                <img src="data:image/png;base64,{get_base64_image(FAVICON)}" style="width:22px; height:22px; object-fit:contain; flex-shrink:0;" />
+                <div style="color:#2e4a6a; font-size:0.70rem; letter-spacing:0.04em;">
+                    by Manan Pal · GNN Security Research
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
     return top_k
 
 
 def render_hero():
     col_title, col_status = st.columns([4, 1])
+
     with col_title:
-        col_logo_h, col_title_h = st.columns([1, 8])
-        with col_logo_h:
-            if FAVICON.exists():
-                st.image(str(FAVICON), width=46)
-        with col_title_h:
-            st.markdown(
-                "<h1 style='font-size:1.75rem; font-weight:700; letter-spacing:-0.02em; color:#1ec8ff; margin:0; padding-top:2px;'>"
-                "CyberGraph — <span style='color:#F5A623;'>Attack Path</span> Intelligence Platform"
-                "</h1>",
-                unsafe_allow_html=True,
-            )
-            st.markdown(
-                "<p style='color:#4a6f9a; font-size:0.85rem; margin-top:4px;'>"
-                "Graph Neural Network · MITRE ATT&CK · CVSS v3.1 · Real-Time Risk Scoring"
-                "</p>",
-                unsafe_allow_html=True,
-            )
+        st.markdown(
+            f"""
+            <div style="display:flex; align-items:center; gap:14px;">
+                <img src="data:image/png;base64,{get_base64_image(FAVICON)}" style="width:46px; height:46px; object-fit:contain; flex-shrink:0;" />
+                <div>
+                    <div style="font-size:1.75rem; font-weight:700; letter-spacing:-0.02em; color:#1ec8ff; line-height:1.1;">
+                        CyberGraph — <span style="color:#F5A623;">Attack Path</span> Intelligence Platform
+                    </div>
+                    <div style="color:#4a6f9a; font-size:0.85rem; margin-top:4px;">
+                        Graph Neural Network · MITRE ATT&CK · CVSS v3.1 · Real-Time Risk Scoring
+                    </div>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
     with col_status:
         if st.session_state.graph is not None:
@@ -738,6 +745,7 @@ def render_hero():
                 f" background: rgba(255,255,255,0.03);'>● {tier} RISK</span></div>",
                 unsafe_allow_html=True,
             )
+
     st.markdown("---")
 
 
@@ -779,10 +787,7 @@ def render_main_analysis(G: nx.DiGraph, paths: List[Dict], metrics: Dict, threat
             st.info("No attack paths detected in this network configuration.")
         else:
             st.markdown(
-                f"<div class='cyber-card'>"
-                f"<b style='color:#F5A623'>Detected {len(paths)} exploitable attack path(s)</b> "
-                f"using risk-weighted graph traversal."
-                f"</div>",
+                f"<div class='cyber-card'><b style='color:#F5A623'>Detected {len(paths)} exploitable attack path(s)</b> using risk-weighted graph traversal.</div>",
                 unsafe_allow_html=True,
             )
             st.plotly_chart(build_top_paths_table(paths), use_container_width=True)
@@ -822,8 +827,7 @@ def render_main_analysis(G: nx.DiGraph, paths: List[Dict], metrics: Dict, threat
             with col_info:
                 all_techs = {t for tac in threat_matrix.values() for t in tac}
                 st.markdown(
-                    f"**{len(all_techs)} techniques** detected across "
-                    f"**{len([t for t in threat_matrix if threat_matrix[t]])} tactics**"
+                    f"**{len(all_techs)} techniques** detected across **{len([t for t in threat_matrix if threat_matrix[t]])} tactics**"
                 )
                 for tech_id in sorted(all_techs):
                     info = MITRE_TECHNIQUES.get(tech_id, {})
