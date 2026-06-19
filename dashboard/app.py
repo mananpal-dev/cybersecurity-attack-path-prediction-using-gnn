@@ -71,9 +71,39 @@ html, body, [class*="css"] {
     background: #060d1a;
 }
 
+header[data-testid="stHeader"] {
+    background: transparent;
+}
+
+div[data-testid="stToolbar"] {
+    visibility: hidden;
+    height: 0;
+}
+
 .main .block-container {
-    padding: 1.5rem 2rem 2rem;
-    max-width: 1400px;
+    width: 100%;
+    max-width: none;
+    padding-top: 1.35rem;
+    padding-right: 1.5rem;
+    padding-bottom: 2rem;
+    padding-left: 1.5rem;
+}
+
+/* Fix: prevent any column from overflowing */
+[data-testid="stHorizontalBlock"] {
+    overflow: hidden !important;
+    gap: 1rem !important;
+}
+
+[data-testid="stColumn"] {
+    overflow: hidden !important;
+    min-width: 0 !important;
+}
+
+/* Fix: plotly charts must not overflow their column */
+.js-plotly-plot, .plotly, .plot-container {
+    max-width: 100% !important;
+    overflow: hidden !important;
 }
 
 [data-testid="metric-container"] {
@@ -108,32 +138,12 @@ html, body, [class*="css"] {
     font-size: 0.78rem !important;
 }
 
-h1 {
-    color: #1ec8ff !important;
-    font-weight: 700 !important;
-    letter-spacing: -0.02em;
-}
+h1 { color: #1ec8ff !important; font-weight: 700 !important; letter-spacing: -0.02em; }
+h2 { color: #c5d8f0 !important; font-weight: 600 !important; font-size: 1.15rem !important; }
+h3 { color: #8aafd4 !important; font-weight: 500 !important; font-size: 0.95rem !important; }
+hr { border-color: rgba(245, 166, 35, 0.12) !important; }
 
-h2 {
-    color: #c5d8f0 !important;
-    font-weight: 600 !important;
-    font-size: 1.15rem !important;
-}
-
-h3 {
-    color: #8aafd4 !important;
-    font-weight: 500 !important;
-    font-size: 0.95rem !important;
-}
-
-hr {
-    border-color: rgba(245, 166, 35, 0.12) !important;
-}
-
-.js-plotly-plot {
-    border-radius: 12px;
-    overflow: hidden;
-}
+.js-plotly-plot { border-radius: 12px; overflow: hidden; }
 
 [data-testid="stDataFrame"] {
     border: 1px solid rgba(30, 200, 255, 0.12);
@@ -157,9 +167,7 @@ hr {
     transform: translateY(-1px);
 }
 
-.stAlert {
-    border-radius: 10px !important;
-}
+.stAlert { border-radius: 10px !important; }
 
 .stExpander {
     border: 1px solid rgba(30, 200, 255, 0.12) !important;
@@ -173,15 +181,8 @@ hr {
     padding: 4px;
 }
 
-.stTabs [data-baseweb="tab"] {
-    color: #7aa3cc !important;
-    border-radius: 8px;
-}
-
-.stTabs [aria-selected="true"] {
-    background: rgba(245, 166, 35, 0.12) !important;
-    color: #F5A623 !important;
-}
+.stTabs [data-baseweb="tab"] { color: #7aa3cc !important; border-radius: 8px; }
+.stTabs [aria-selected="true"] { background: rgba(245, 166, 35, 0.12) !important; color: #F5A623 !important; }
 
 .stSelectbox>div>div {
     background: rgba(10, 25, 55, 0.85) !important;
@@ -199,67 +200,16 @@ hr {
     backdrop-filter: blur(6px);
 }
 
-.cyber-card:hover {
-    border-color: rgba(245, 166, 35, 0.25);
-}
+.cyber-card:hover { border-color: rgba(245, 166, 35, 0.25); }
 
-.badge-critical {
-    background:#2d0a0a;
-    border:1px solid #FF3B3B;
-    color:#FF3B3B;
-    padding:3px 10px;
-    border-radius:6px;
-    font-size:0.78rem;
-    font-weight:600;
-    font-family:'JetBrains Mono',monospace;
-}
+.badge-critical { background:#2d0a0a; border:1px solid #FF3B3B; color:#FF3B3B; padding:3px 10px; border-radius:6px; font-size:0.78rem; font-weight:600; font-family:'JetBrains Mono',monospace; }
+.badge-high     { background:#2d1a00; border:1px solid #FF8C00; color:#FF8C00; padding:3px 10px; border-radius:6px; font-size:0.78rem; font-weight:600; font-family:'JetBrains Mono',monospace; }
+.badge-medium   { background:#2d2700; border:1px solid #FFD700; color:#FFD700; padding:3px 10px; border-radius:6px; font-size:0.78rem; font-weight:600; font-family:'JetBrains Mono',monospace; }
+.badge-low      { background:#0a2d10; border:1px solid #22C55E; color:#22C55E; padding:3px 10px; border-radius:6px; font-size:0.78rem; font-weight:600; font-family:'JetBrains Mono',monospace; }
 
-.badge-high {
-    background:#2d1a00;
-    border:1px solid #FF8C00;
-    color:#FF8C00;
-    padding:3px 10px;
-    border-radius:6px;
-    font-size:0.78rem;
-    font-weight:600;
-    font-family:'JetBrains Mono',monospace;
-}
-
-.badge-medium {
-    background:#2d2700;
-    border:1px solid #FFD700;
-    color:#FFD700;
-    padding:3px 10px;
-    border-radius:6px;
-    font-size:0.78rem;
-    font-weight:600;
-    font-family:'JetBrains Mono',monospace;
-}
-
-.badge-low {
-    background:#0a2d10;
-    border:1px solid #22C55E;
-    color:#22C55E;
-    padding:3px 10px;
-    border-radius:6px;
-    font-size:0.78rem;
-    font-weight:600;
-    font-family:'JetBrains Mono',monospace;
-}
-
-::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-}
-
-::-webkit-scrollbar-track {
-    background: #060d1a;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(245, 166, 35, 0.2);
-    border-radius: 4px;
-}
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #060d1a; }
+::-webkit-scrollbar-thumb { background: rgba(245, 166, 35, 0.2); border-radius: 4px; }
 </style>
 """,
     unsafe_allow_html=True,
@@ -398,7 +348,7 @@ def build_attack_graph_figure(G: nx.DiGraph, paths: List[Dict]) -> go.Figure:
         xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
         yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
         hovermode="closest",
-        height=480,
+        height=460,
     )
     return fig
 
@@ -431,17 +381,17 @@ def build_risk_gauge(risk_score: float) -> go.Figure:
             mode="gauge+number",
             value=risk_score,
             domain={"x": [0, 1], "y": [0, 1]},
-            number={"font": {"size": 40, "color": color, "family": "Space Grotesk"}},
-            title={"text": "Network Risk Score", "font": {"size": 13, "color": "#7aa3cc"}},
+            number={"font": {"size": 36, "color": color, "family": "Space Grotesk"}},
+            title={"text": "Network Risk Score", "font": {"size": 12, "color": "#7aa3cc"}},
             gauge={
                 "axis": {"range": [0, 10], "tickwidth": 1, "tickcolor": "#334155", "nticks": 6},
                 "bar": {"color": color, "thickness": 0.25},
                 "bgcolor": "rgba(10,22,45,0.6)",
                 "borderwidth": 0,
                 "steps": [
-                    {"range": [0, 4], "color": "rgba(34,197,94,0.15)"},
-                    {"range": [4, 7], "color": "rgba(255,215,0,0.12)"},
-                    {"range": [7, 9], "color": "rgba(255,140,0,0.12)"},
+                    {"range": [0, 4],  "color": "rgba(34,197,94,0.15)"},
+                    {"range": [4, 7],  "color": "rgba(255,215,0,0.12)"},
+                    {"range": [7, 9],  "color": "rgba(255,140,0,0.12)"},
                     {"range": [9, 10], "color": "rgba(255,59,59,0.15)"},
                 ],
                 "threshold": {
@@ -452,7 +402,7 @@ def build_risk_gauge(risk_score: float) -> go.Figure:
             },
         )
     )
-    apply_layout(fig, height=220, margin=dict(l=20, r=20, t=50, b=10))
+    apply_layout(fig, height=210, margin=dict(l=16, r=16, t=44, b=8))
     return fig
 
 
@@ -495,7 +445,7 @@ def build_attack_path_sankey(paths: List[Dict], G: nx.DiGraph) -> go.Figure:
     )
     apply_layout(
         fig,
-        title=dict(text="Attack Flow — Segment Traversal", font=dict(size=13, color="#7aa3cc")),
+        title=dict(text="Attack Flow - Segment Traversal", font=dict(size=13, color="#7aa3cc")),
         height=300,
     )
     return fig
@@ -563,7 +513,7 @@ def build_segment_pie(G: nx.DiGraph) -> go.Figure:
             values=values,
             marker=dict(colors=colors, line=dict(color="rgba(0,0,0,0.3)", width=1.5)),
             hole=0.55,
-            textfont=dict(size=11, family="Space Grotesk"),
+            textfont=dict(size=10, family="Space Grotesk"),
             hovertemplate="<b>%{label}</b><br>Assets: %{value}<br>%{percent}<extra></extra>",
         )
     )
@@ -571,8 +521,9 @@ def build_segment_pie(G: nx.DiGraph) -> go.Figure:
         fig,
         title=dict(text="Assets by Network Segment", font=dict(size=13, color="#7aa3cc")),
         showlegend=True,
-        legend=dict(font=dict(size=10), bgcolor="rgba(0,0,0,0)", x=0.85),
-        height=260,
+        legend=dict(font=dict(size=9), bgcolor="rgba(0,0,0,0)", x=0.75, y=0.5),
+        height=240,
+        margin=dict(l=8, r=8, t=36, b=8),
     )
     return fig
 
@@ -598,15 +549,8 @@ def build_top_paths_table(paths: List[Dict]) -> go.Figure:
     fig = go.Figure(
         go.Table(
             header=dict(
-                values=[
-                    "<b>ID</b>",
-                    "<b>Score</b>",
-                    "<b>Tier</b>",
-                    "<b>Hops</b>",
-                    "<b>Techniques</b>",
-                    "<b>Primary Tactic</b>",
-                    "<b>Blast Radius</b>",
-                ],
+                values=["<b>ID</b>","<b>Score</b>","<b>Tier</b>","<b>Hops</b>",
+                        "<b>Techniques</b>","<b>Primary Tactic</b>","<b>Blast Radius</b>"],
                 fill_color="rgba(15,27,45,0.98)",
                 align="left",
                 font=dict(color="#F5A623", size=11, family="Space Grotesk"),
@@ -651,7 +595,7 @@ def render_sidebar():
         )
 
         st.divider()
-        st.markdown("### ⚙️ Scan Configuration")
+        st.markdown("### Scan Configuration")
         node_count = st.slider("Network Assets", 15, 120, st.session_state.node_count, 5)
         seed = st.number_input("Scenario Seed", 0, 9999, st.session_state.seed, 1)
         scenario = st.selectbox(
@@ -661,12 +605,12 @@ def render_sidebar():
         )
         is_attack = scenario == "Attack Scenario"
 
-        st.markdown("### 🎯 Analysis Mode")
+        st.markdown("### Analysis Mode")
         analysis_mode = st.selectbox("Mode", ["Full Analysis", "Quick Scan", "Deep Dive"], index=0)
         top_k = st.slider("Max Attack Paths", 1, 10, st.session_state.top_k)
 
         st.divider()
-        run = st.button("🔍 Run Analysis", use_container_width=True)
+        run = st.button("Run Analysis", use_container_width=True)
 
         if run:
             st.session_state.node_count = node_count
@@ -677,7 +621,7 @@ def render_sidebar():
                 _run_analysis(node_count, seed, is_attack, top_k)
 
         st.divider()
-        st.markdown("### 📊 Legend")
+        st.markdown("### Legend")
         legend_items = [
             ("🔴", "Internet / Entry Point", "#FF3B3B"),
             ("🟠", "DMZ / Perimeter", "#FF8C00"),
@@ -713,51 +657,52 @@ def render_sidebar():
 
 
 def render_hero():
-    col_title, col_status = st.columns([4, 1])
+    logo_b64 = get_base64_image(FAVICON)
+    logo_html = (
+        f'<img src="data:image/png;base64,{logo_b64}" style="width:46px;height:46px;object-fit:contain;flex-shrink:0;" />'
+        if logo_b64 else ""
+    )
 
-    with col_title:
-        st.markdown(
-            f"""
-            <div style="display:flex; align-items:center; gap:14px;">
-                <img src="data:image/png;base64,{get_base64_image(FAVICON)}" style="width:46px; height:46px; object-fit:contain; flex-shrink:0;" />
-                <div>
-                    <div style="font-size:1.75rem; font-weight:700; letter-spacing:-0.02em; color:#1ec8ff; line-height:1.1;">
-                        CyberGraph — <span style="color:#F5A623;">Attack Path</span> Intelligence Platform
-                    </div>
-                    <div style="color:#4a6f9a; font-size:0.85rem; margin-top:4px;">
-                        Graph Neural Network · MITRE ATT&CK · CVSS v3.1 · Real-Time Risk Scoring
-                    </div>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
+    badge_html = ""
+    if st.session_state.graph is not None:
+        m = st.session_state.metrics
+        tier = m.get("network_risk_tier", "LOW")
+        color = RISK_COLORS.get(tier, "#64748B")
+        badge_html = (
+            f"<span style='color:{color};font-weight:700;font-size:0.85rem;"
+            f"border:1px solid {color};padding:4px 14px;border-radius:6px;"
+            f"background:rgba(255,255,255,0.03);white-space:nowrap;'>&#9679; {tier} RISK</span>"
         )
 
-    with col_status:
-        if st.session_state.graph is not None:
-            m = st.session_state.metrics
-            tier = m.get("network_risk_tier", "LOW")
-            color = RISK_COLORS.get(tier, "#64748B")
-            st.markdown(
-                f"<div style='text-align:right; padding-top:10px;'>"
-                f"<span style='color:{color}; font-weight:700; font-size:0.85rem;"
-                f" border:1px solid {color}; padding:4px 12px; border-radius:6px;"
-                f" background: rgba(255,255,255,0.03);'>● {tier} RISK</span></div>",
-                unsafe_allow_html=True,
-            )
-
+    st.markdown(
+        f"""
+        <div style="display:flex;align-items:center;gap:14px;padding:10px 0 8px 0;width:100%;">
+            {logo_html}
+            <div style="min-width:0;flex:1;">
+                <div style="font-size:1.65rem;font-weight:700;letter-spacing:-0.02em;color:#1ec8ff;line-height:1.15;">
+                    CyberGraph &mdash; <span style="color:#F5A623;">Attack Path</span> Intelligence Platform
+                </div>
+                <div style="color:#4a6f9a;font-size:0.83rem;margin-top:4px;">
+                    Graph Neural Network &middot; MITRE ATT&amp;CK &middot; CVSS v3.1 &middot; Real-Time Risk Scoring
+                </div>
+            </div>
+            {badge_html}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     st.markdown("---")
 
 
 def render_kpi_strip(metrics: Dict):
     cols = st.columns(6)
     kpis = [
-        ("🖥 Total Assets", metrics.get("total_assets", 0)),
-        ("⚠️ Critical Vulns", metrics.get("critical_vuln_count", 0)),
-        ("🌐 Internet Exposed", metrics.get("internet_exposed", 0)),
-        ("🔴 Attack Paths", metrics.get("attack_paths_found", 0)),
-        ("📊 Avg CVSS", f"{metrics.get('avg_cvss', 0):.1f}"),
-        ("🎯 MITRE Techniques", metrics.get("unique_techniques", 0)),
+        ("Total Assets",     metrics.get("total_assets", 0)),
+        ("Critical Vulns",   metrics.get("critical_vuln_count", 0)),
+        ("Internet Exposed", metrics.get("internet_exposed", 0)),
+        ("Attack Paths",     metrics.get("attack_paths_found", 0)),
+        ("Avg CVSS",         f"{metrics.get('avg_cvss', 0):.1f}"),
+        ("MITRE Techniques", metrics.get("unique_techniques", 0)),
     ]
     for col, (label, value) in zip(cols, kpis):
         col.metric(label, value)
@@ -765,18 +710,19 @@ def render_kpi_strip(metrics: Dict):
 
 def render_main_analysis(G: nx.DiGraph, paths: List[Dict], metrics: Dict, threat_matrix: Dict):
     tab_overview, tab_paths, tab_mitre, tab_details = st.tabs(
-        ["📊 Overview", "🔴 Attack Paths", "🎯 MITRE ATT&CK", "🔍 Node Details"]
+        ["Overview", "Attack Paths", "MITRE ATT&CK", "Node Details"]
     )
 
     with tab_overview:
-        col_graph, col_right = st.columns([3, 2])
+        # KEY FIX: changed [3,2] → [3,1.6] so right column has enough room
+        col_graph, col_right = st.columns([3, 1.6], gap="medium")
         with col_graph:
             st.plotly_chart(build_attack_graph_figure(G, paths), use_container_width=True)
         with col_right:
             st.plotly_chart(build_risk_gauge(metrics.get("max_path_risk", 0)), use_container_width=True)
             st.plotly_chart(build_segment_pie(G), use_container_width=True)
 
-        col_h, col_cvss = st.columns(2)
+        col_h, col_cvss = st.columns(2, gap="medium")
         with col_h:
             st.plotly_chart(build_attack_path_sankey(paths, G), use_container_width=True)
         with col_cvss:
@@ -881,10 +827,7 @@ def render_executive_summary(metrics: Dict, paths: List[Dict]):
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.markdown(
-            "<div class='cyber-card'><h3 style='color:#F5A623; margin-top:0'>Risk Posture</h3>",
-            unsafe_allow_html=True,
-        )
+        st.markdown("<div class='cyber-card'><h3 style='color:#F5A623; margin-top:0'>Risk Posture</h3>", unsafe_allow_html=True)
         st.markdown(
             f"Network risk tier: **{metrics.get('network_risk_tier', 'N/A')}**  \n"
             f"Max path score: **{metrics.get('max_path_risk', 0):.1f}/10**  \n"
@@ -894,10 +837,7 @@ def render_executive_summary(metrics: Dict, paths: List[Dict]):
         st.markdown("</div>", unsafe_allow_html=True)
 
     with col2:
-        st.markdown(
-            "<div class='cyber-card'><h3 style='color:#FF8C00; margin-top:0'>Vulnerability Stats</h3>",
-            unsafe_allow_html=True,
-        )
+        st.markdown("<div class='cyber-card'><h3 style='color:#FF8C00; margin-top:0'>Vulnerability Stats</h3>", unsafe_allow_html=True)
         st.markdown(
             f"Critical (CVSS ≥ 9.0): **{metrics.get('critical_vuln_count', 0)}**  \n"
             f"High (CVSS ≥ 7.0): **{metrics.get('high_vuln_count', 0)}**  \n"
@@ -907,23 +847,16 @@ def render_executive_summary(metrics: Dict, paths: List[Dict]):
         st.markdown("</div>", unsafe_allow_html=True)
 
     with col3:
-        st.markdown(
-            "<div class='cyber-card'><h3 style='color:#22C55E; margin-top:0'>Recommended Actions</h3>",
-            unsafe_allow_html=True,
-        )
+        st.markdown("<div class='cyber-card'><h3 style='color:#22C55E; margin-top:0'>Recommended Actions</h3>", unsafe_allow_html=True)
         actions = []
-        crit = metrics.get("critical_vuln_count", 0)
+        crit    = metrics.get("critical_vuln_count", 0)
         exposed = metrics.get("internet_exposed", 0)
         unpatched = metrics.get("unpatched_assets", 0)
 
-        if crit > 0:
-            actions.append(f"Patch {crit} critical-severity assets immediately")
-        if exposed > 3:
-            actions.append(f"Reduce internet attack surface ({exposed} exposed)")
-        if unpatched > 0:
-            actions.append(f"Apply patches to {unpatched} unpatched assets")
-        if not actions:
-            actions.append("Network risk posture is acceptable")
+        if crit > 0:      actions.append(f"Patch {crit} critical-severity assets immediately")
+        if exposed > 3:   actions.append(f"Reduce internet attack surface ({exposed} exposed)")
+        if unpatched > 0: actions.append(f"Apply patches to {unpatched} unpatched assets")
+        if not actions:   actions.append("Network risk posture is acceptable")
 
         for a in actions:
             st.markdown(f"- {a}")
